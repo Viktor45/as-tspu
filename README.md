@@ -31,8 +31,8 @@ Do not add to the list:
 Q: How can I get a CIDR-IP list from this list?
 
 A: See the following resources:
-http://github.com/ipverse/as-ip-blocks/
-https://bgp.tools/
+* http://github.com/ipverse/as-ip-blocks/
+* https://bgp.tools/
 
 
 ## Legal notice
