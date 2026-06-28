@@ -2,12 +2,12 @@
 Crowdsourced list of AS numbers affected by TSPU interference
 
 <!-- TOC -->
-- [as-tspu](#as-tspu)
-  - [Purpose of the list](#purpose-of-the-list)
-  - [Download](#download)
-  - [Guidelines](#guidelines)
-  - [IPVerse data generation](#ipverse-data-generation)
-  - [Legal notice](#legal-notice)
+* [as-tspu](#as-tspu)
+  * [Purpose of the list](#purpose-of-the-list)
+  * [Download](#download)
+  * [Guidelines](#guidelines)
+  * [IPVerse data generation](#ipverse-data-generation)
+  * [Legal notice](#legal-notice)
 <!-- TOC -->
 
 ## Purpose of the list
@@ -17,15 +17,15 @@ This list aims to simplify for end users the list of networks whose access must 
 
 The lists can be downloaded here:
 
-| list version         | filename         | download link                                                                                               |
-| -------------------- | ---------------- | ----------------------------------------------------------------------------------------------------------- |
-| ASN only             | `as-numbers.txt` | [as-numbers.txt](https://raw.githubusercontent.com/Viktor45/as-tspu/refs/heads/main/as-numbers.txt)         |
-| IPv4 as-is           | `ipv4.txt`       | [ipv4.txt](https://raw.githubusercontent.com/Viktor45/as-tspu/refs/heads/main/ipverse/ipv4.txt)             |
-| IPv6 as-is           | `ipv6.txt`       | [ipv6.txt](https://raw.githubusercontent.com/Viktor45/as-tspu/refs/heads/main/ipverse/ipv6.txt)             |
-| IPv4+IPv6 as-is      | `merged.txt`     | [merged.txt](https://raw.githubusercontent.com/Viktor45/as-tspu/refs/heads/main/ipverse/merged.txt)         |
-| IPv4 aggregated      | `ipv4-agg.txt`   | [ipv4-agg.txt](https://raw.githubusercontent.com/Viktor45/as-tspu/refs/heads/main/ipverse/ipv4-agg.txt)     |
-| IPv6 aggregated      | `ipv6-agg.txt`   | [ipv6-agg.txt](https://raw.githubusercontent.com/Viktor45/as-tspu/refs/heads/main/ipverse/ipv6-agg.txt)     |
-| IPv4+IPv6 aggregated | `merged-agg.txt` | [merged-agg.txt](https://raw.githubusercontent.com/Viktor45/as-tspu/refs/heads/main/ipverse/merged-agg.txt) |
+| list      | version    | filename         | download link                                                                                                  |
+|-----------|------------|------------------|----------------------------------------------------------------------------------------------------------------|
+| ASN       | text       | `as-numbers.txt` | [💾 as-numbers.txt](https://raw.githubusercontent.com/Viktor45/as-tspu/refs/heads/main/as-numbers.txt)         |
+| IPv4      | as-is      | `ipv4.txt`       | [💾 ipv4.txt](https://raw.githubusercontent.com/Viktor45/as-tspu/refs/heads/main/ipverse/ipv4.txt)             |
+| IPv6      | as-is      | `ipv6.txt`       | [💾 ipv6.txt](https://raw.githubusercontent.com/Viktor45/as-tspu/refs/heads/main/ipverse/ipv6.txt)             |
+| IPv4+IPv6 | as-is      | `merged.txt`     | [💾 merged.txt](https://raw.githubusercontent.com/Viktor45/as-tspu/refs/heads/main/ipverse/merged.txt)         |
+| IPv4      | aggregated | `ipv4-agg.txt`   | [💾 ipv4-agg.txt](https://raw.githubusercontent.com/Viktor45/as-tspu/refs/heads/main/ipverse/ipv4-agg.txt)     |
+| IPv6      | aggregated | `ipv6-agg.txt`   | [💾 ipv6-agg.txt](https://raw.githubusercontent.com/Viktor45/as-tspu/refs/heads/main/ipverse/ipv6-agg.txt)     |
+| IPv4+IPv6 | aggregated | `merged-agg.txt` | [💾 merged-agg.txt](https://raw.githubusercontent.com/Viktor45/as-tspu/refs/heads/main/ipverse/merged-agg.txt) |
 
 Please note: The **as-is** version contains the ASN and IP data as provided in the ipverse repository, the **aggregated** version contains only the aggregated IP/CIDR data without any comments.
 
