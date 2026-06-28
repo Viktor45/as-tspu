@@ -1,0 +1,4 @@
+# AS42065 (ETELECOM-AS)
+# Global Network Management Inc
+#
+2a02:1e1::/32

@@ -2,11 +2,12 @@
 Crowdsourced list of AS numbers affected by TSPU interference
 
 <!-- TOC -->
-* [as-tspu](#as-tspu)
-  * [Purpose of the list](#purpose-of-the-list)
-  * [Guidelines](#guidelines)
-  * [FAQ](#faq)
-  * [Legal notice](#legal-notice)
+- [as-tspu](#as-tspu)
+  - [Purpose of the list](#purpose-of-the-list)
+  - [Guidelines](#guidelines)
+  - [IPVerse data generation](#ipverse-data-generation)
+  - [FAQ](#faq)
+  - [Legal notice](#legal-notice)
 <!-- TOC -->
 
 ## Purpose of the list
@@ -25,6 +26,18 @@ The following are welcome:
 Do not add to the list:
 * YouTube, Google, etc.
 * Russian resources and networks.
+
+## IPVerse data generation
+
+This repository includes `ipverse.sh`, a helper script that downloads IPv4 and IPv6 aggregated prefix lists for each AS in `as-numbers.txt` from the `ipverse/as-ip-blocks` repository.
+
+Running `sh ipverse.sh` will:
+* create an `ipverse` folder
+* download per-AS `ipv4-aggregated.txt` files to `ipverse/ipv4/{AS}.txt`
+* download per-AS `ipv6-aggregated.txt` files to `ipverse/ipv6/{AS}.txt`
+* merge all IPv4 files into `ipverse/ipv4.txt`
+* merge all IPv6 files into `ipverse/ipv6.txt`
+* combine both into `ipverse/merged.txt`
 
 ## FAQ
 

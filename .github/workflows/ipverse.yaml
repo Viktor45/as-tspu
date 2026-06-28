@@ -1,0 +1,161 @@
+# ============================================================================
+# Automated as-tspu (ipverse) Update Workflow
+# ============================================================================
+
+name: Update ipverse
+
+on:
+  # Run every Sunday at 2 AM UTC
+  # Rationale: low traffic time, daily fresh data without overwhelming API
+  schedule:
+    - cron: "0 2 * * 0"
+
+  # Allow manual trigger for emergency updates or testing
+  workflow_dispatch:
+
+jobs:
+  update-servers:
+    name: Fetch and Update ipverse Data
+    runs-on: ubuntu-latest
+    permissions:
+      # Only need write access to repository content for creating commits
+      contents: write
+    timeout-minutes: 15 # Prevent hanging jobs
+
+    steps:
+      # ======================================================================
+      # Step 1: Checkout repository
+      # Using v4 (latest stable) for better performance and security
+      # ======================================================================
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          # Shallow clone to speed up checkout (we only need HEAD)
+          fetch-depth: 1
+          # Use default GITHUB_TOKEN (no need for PAT_TOKEN)
+
+      # ======================================================================
+      # Step 2: Validate base environment
+      # Ensure critical tools are available before proceeding
+      # ======================================================================
+      - name: Validate environment
+        run: |
+          echo "Checking required tools..."
+          which curl || (echo "ERROR: curl not found"; exit 1)
+          which grep || (echo "ERROR: grep not found"; exit 1)
+          echo "✓ All required tools available"
+          echo "Workspace directory: $(pwd)"
+
+      # ======================================================================
+      # Step 3: Prepare update script
+      # Make shell script executable with proper error handling
+      # ======================================================================
+      - name: Prepare update script
+        run: |
+          SCRIPT_PATH="./ipverse.sh"
+          if [ ! -f "$SCRIPT_PATH" ]; then
+            echo "ERROR: Script not found at $SCRIPT_PATH"
+            exit 1
+          fi
+          chmod +x "$SCRIPT_PATH"
+          echo "✓ Script prepared and made executable"
+
+      # ======================================================================
+      # Step 4: Fetch updated ipverse data
+      # Downloads from ipverse repository and merges downloaded IP ranges
+      # Includes error handling for network failures
+      # ======================================================================
+      - name: Fetch latest ipverse data
+        run: |
+          echo "Fetching ipverse data..."
+          if ./ipverse.sh; then
+            echo "✓ ipverse data fetched successfully"
+          else
+            echo "ERROR: Failed to fetch or process ipverse data"
+            exit 1
+          fi
+
+      # ======================================================================
+      # Step 5: Validate fetched data before commit
+      # Ensures file integrity and prevents committing corrupted data
+      # ======================================================================
+      - name: Validate data integrity
+        run: |
+          SERVERS_FILE="./ipverse/merged.txt"
+          if [ ! -f "$SERVERS_FILE" ]; then
+            echo "ERROR: merged.txt file not created"
+            exit 1
+          fi
+
+          # Count lines and validate
+          LINE_COUNT=$(wc -l < "$SERVERS_FILE")
+          echo "Server entries found: $LINE_COUNT"
+
+          # Sanity check: must have at least 10 lines (fail if list is corrupted)
+          if [ "$LINE_COUNT" -lt 10 ]; then
+            echo "ERROR: ipverse list suspiciously small ($LINE_COUNT lines). Possible corruption."
+            exit 1
+          fi
+
+      # ======================================================================
+      # Step 6: Configure Git environment
+      # Set up bot identity for commits (standard practice for automation)
+      # ======================================================================
+      - name: Configure Git user
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          echo "✓ Git user configured for automation"
+
+      # ======================================================================
+      # Step 7: Commit and push changes if detected
+      # Only creates commit if merged.txt actually changed
+      # Prevents spam commits and unnecessary workflow triggers
+      # ======================================================================
+      - name: Commit and push changes if detected
+        run: |
+          echo "Checking for changes in ipverse data..."
+          git add ./ipverse/ipv4.txt
+          git add ./ipverse/ipv6.txt
+          git add ./ipverse/merged.txt
+
+          # Check if there are actual changes staged
+          if git diff --cached --quiet; then
+            echo "ℹ No changes detected in ipverse data"
+            echo "✓ ipverse data is up-to-date"
+            exit 0
+          fi
+
+          # Show what changed (before committing)
+          echo "Changes detected:"
+          git diff --cached --stat
+
+          # Create informative commit message with timestamp
+          COMMIT_MSG="chore: auto-update ipverse data"
+
+          git commit -m "$COMMIT_MSG"
+          echo "✓ Changes committed"
+
+          # Push with error handling
+          if git push; then
+            echo "✓ Changes pushed successfully to origin/${{ github.ref_name }}"
+          else
+            echo "ERROR: Failed to push changes"
+            exit 1
+          fi
+
+      # ======================================================================
+      # Step 8: Summary and notification
+      # Log final status for workflow visibility
+      # ======================================================================
+      - name: Log workflow summary
+        if: always()
+        run: |
+          echo "========================================"
+          echo "Update Complete"
+          echo "========================================"
+          echo "Job Status: ${{ job.status }}"
+          echo "Timestamp: $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
+          echo "Repository: ${{ github.repository }}"
+          echo "Branch: ${{ github.ref_name }}"
+          echo "========================================"
