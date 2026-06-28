@@ -17,13 +17,17 @@ This list aims to simplify for end users the list of networks whose access must 
 
 The lists can be downloaded here:
 
-| list version | filename         | download link                                                                                       |
-| ------------ | ---------------- | --------------------------------------------------------------------------------------------------- |
-| ASN only     | `as-numbers.txt` | [as-numbers.txt](https://raw.githubusercontent.com/Viktor45/as-tspu/refs/heads/main/as-numbers.txt) |
-| IPv4         | `ipv4.txt`       | [ipv4.txt](https://raw.githubusercontent.com/Viktor45/as-tspu/refs/heads/main/ipverse/ipv4.txt)     |
-| IPv6         | `ipv6.txt`       | [ipv6.txt](https://raw.githubusercontent.com/Viktor45/as-tspu/refs/heads/main/ipverse/ipv6.txt)     |
-| IPv4+IPv6    | `merged.txt`     | [merged.txt](https://raw.githubusercontent.com/Viktor45/as-tspu/refs/heads/main/ipverse/merged.txt) |
+| list version         | filename         | download link                                                                                               |
+| -------------------- | ---------------- | ----------------------------------------------------------------------------------------------------------- |
+| ASN only             | `as-numbers.txt` | [as-numbers.txt](https://raw.githubusercontent.com/Viktor45/as-tspu/refs/heads/main/as-numbers.txt)         |
+| IPv4 as-is           | `ipv4.txt`       | [ipv4.txt](https://raw.githubusercontent.com/Viktor45/as-tspu/refs/heads/main/ipverse/ipv4.txt)             |
+| IPv6 as-is           | `ipv6.txt`       | [ipv6.txt](https://raw.githubusercontent.com/Viktor45/as-tspu/refs/heads/main/ipverse/ipv6.txt)             |
+| IPv4+IPv6 as-is      | `merged.txt`     | [merged.txt](https://raw.githubusercontent.com/Viktor45/as-tspu/refs/heads/main/ipverse/merged.txt)         |
+| IPv4 aggregated      | `ipv4-agg.txt`   | [ipv4-agg.txt](https://raw.githubusercontent.com/Viktor45/as-tspu/refs/heads/main/ipverse/ipv4-agg.txt)     |
+| IPv6 aggregated      | `ipv6-agg.txt`   | [ipv6-agg.txt](https://raw.githubusercontent.com/Viktor45/as-tspu/refs/heads/main/ipverse/ipv6-agg.txt)     |
+| IPv4+IPv6 aggregated | `merged-agg.txt` | [merged-agg.txt](https://raw.githubusercontent.com/Viktor45/as-tspu/refs/heads/main/ipverse/merged-agg.txt) |
 
+Please note: The **as-is** version contains the ASN and IP data as provided in the ipverse repository, the **aggregated** version contains only the aggregated IP/CIDR data without any comments.
 
 ## Guidelines
 
@@ -50,6 +54,15 @@ Running `sh ipverse.sh` will:
 * merge all IPv4 files into `ipverse/ipv4.txt`
 * merge all IPv6 files into `ipverse/ipv6.txt`
 * combine both into `ipverse/merged.txt`
+
+This repository also includes [agg.sh](agg.sh), which downloads the latest `cidrmgr` binary release for the current OS/architecture and aggregates the generated IP lists.
+
+Running `sh agg.sh` will:
+* download the latest [Viktor45/cidrmgr](https://github.com/Viktor45/cidrmgr) release asset for the current OS/architecture
+* extract the `cidrmgr` binary
+* run `cidrmgr merge -i ipverse/ipv4.txt -o ipverse/ipv4-agg.txt`
+* run `cidrmgr merge -i ipverse/ipv6.txt -o ipverse/ipv6-agg.txt`
+* merge both aggregated outputs into `ipverse/merged-agg.txt`
 
 ## Legal notice
 This list may be used by any telecom operators or users for any lawful purposes.
