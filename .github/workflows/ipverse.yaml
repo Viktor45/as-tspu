@@ -28,7 +28,7 @@ jobs:
       # Using v4 (latest stable) for better performance and security
       # ======================================================================
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           # Shallow clone to speed up checkout (we only need HEAD)
           fetch-depth: 1
