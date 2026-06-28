@@ -1,4 +1,0 @@
-# AS212317 (HETZNER-CLOUD3-AS)
-# Hetzner Online GmbH
-#
-2a01:4ff:100::/40

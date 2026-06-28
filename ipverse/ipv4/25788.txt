@@ -1,4 +1,0 @@
-# AS25788 (CPL-AS)
-# Centerview Partners LLC
-#
-38.108.229.0/24

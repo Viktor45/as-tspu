@@ -1,5 +1,0 @@
-# AS51765 (CREANOVA-AS)
-# Oy Crea Nova Hosting Solution Ltd
-#
-2a0c:f040::/48
-2a10:9681::/32
