@@ -4,14 +4,24 @@ Crowdsourced list of AS numbers affected by TSPU interference
 <!-- TOC -->
 - [as-tspu](#as-tspu)
   - [Purpose of the list](#purpose-of-the-list)
+  - [Download](#download)
   - [Guidelines](#guidelines)
   - [IPVerse data generation](#ipverse-data-generation)
-  - [FAQ](#faq)
   - [Legal notice](#legal-notice)
 <!-- TOC -->
 
 ## Purpose of the list
 This list aims to simplify for end users the list of networks whose access must be corrected due to interference from TSPU equipment. 
+
+## Download
+
+| list version | filename         | download link                                                                                       |
+| ------------ | ---------------- | --------------------------------------------------------------------------------------------------- |
+| ASN only     | `as-numbers.txt` | [as-numbers.txt](https://raw.githubusercontent.com/Viktor45/as-tspu/refs/heads/main/as-numbers.txt) |
+| IPv4         | `ipv4.txt`       | [ipv4.txt](https://raw.githubusercontent.com/Viktor45/as-tspu/refs/heads/main/ipverse/ipv4.txt)     |
+| IPv6         | `ipv6.txt`       | [ipv6.txt](https://raw.githubusercontent.com/Viktor45/as-tspu/refs/heads/main/ipverse/ipv6.txt)     |
+| IPv4+IPv6    | `merged.txt`     | [merged.txt](https://raw.githubusercontent.com/Viktor45/as-tspu/refs/heads/main/ipverse/merged.txt) |
+
 
 ## Guidelines
 
@@ -29,7 +39,7 @@ Do not add to the list:
 
 ## IPVerse data generation
 
-This repository includes `ipverse.sh`, a helper script that downloads IPv4 and IPv6 aggregated prefix lists for each AS in `as-numbers.txt` from the `ipverse/as-ip-blocks` repository.
+This repository includes [ipverse.sh](ipverse.sh), a helper script that downloads IPv4 and IPv6 aggregated prefix lists for each AS in `as-numbers.txt` from the [ipverse/as-ip-blocks](https://github.com/ipverse/as-ip-blocks/) repository.
 
 Running `sh ipverse.sh` will:
 * create an `ipverse` folder
@@ -38,15 +48,6 @@ Running `sh ipverse.sh` will:
 * merge all IPv4 files into `ipverse/ipv4.txt`
 * merge all IPv6 files into `ipverse/ipv6.txt`
 * combine both into `ipverse/merged.txt`
-
-## FAQ
-
-Q: How can I get a CIDR-IP list from this list?
-
-A: See the following resources:
-* https://github.com/ipverse/as-ip-blocks/
-* https://bgp.tools/
-
 
 ## Legal notice
 This list may be used by any telecom operators or users for any lawful purposes.
