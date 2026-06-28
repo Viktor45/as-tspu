@@ -15,6 +15,8 @@ This list aims to simplify for end users the list of networks whose access must 
 
 ## Download
 
+The lists can be downloaded here:
+
 | list version | filename         | download link                                                                                       |
 | ------------ | ---------------- | --------------------------------------------------------------------------------------------------- |
 | ASN only     | `as-numbers.txt` | [as-numbers.txt](https://raw.githubusercontent.com/Viktor45/as-tspu/refs/heads/main/as-numbers.txt) |
