@@ -5,7 +5,7 @@ Crowdsourced list of AS numbers affected by TSPU interference
 - [as-tspu](#as-tspu)
   - [Purpose of the list](#purpose-of-the-list)
   - [Download](#download)
-  - [Guidelines](#guidelines)
+  - [Contributing guidelines](#contributing-guidelines)
   - [IPVerse data generation](#ipverse-data-generation)
   - [Legal notice](#legal-notice)
 <!-- TOC -->
@@ -37,20 +37,21 @@ Please note:
 * The **aggregated** version contains only aggregated IP/CIDR data without comments.
 
 
+## Contributing guidelines
 
-## Guidelines
-
-Additions to the list are welcome. Please remember to cite the source.
+Additions to the list are welcome. Please be sure to cite the source.
 
 Simple rules for the list:
 
-The following are welcome:
+The following resources are welcome:
 * Foreign hosting providers;
 * CDN resources.
 
 Do not add to the list:
 * YouTube, Google, etc.
 * Russian resources and networks.
+
+Create an issue or submit a PR to `as-numbers.txt`. Other files are generated automatically every 8 hours.
 
 ## IPVerse data generation
 
