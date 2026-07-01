@@ -73,7 +73,7 @@ The following settings are mandatory. A dedicated routing table for BGP routes m
 
 * `table-bgp` is our routing table for BGP routes.
 
-```routeros
+```sh
 # Create a routing table for BGP routes. The 'fib' parameter is mandatory.
 /routing table
 add comment="BGP TABLE" disabled=no fib name=table-bgp
@@ -86,7 +86,7 @@ The following settings are mandatory. These rules define the traffic routing log
 * IMPORTANT: Replace `LAN_INTERFACE` with the actual name of your local interface or bridge.
 * If multiple local interfaces exist, create a corresponding rule for each.
 
-```routeros
+```sh
 # 1. Allow local traffic (between local subnets) to be routed via the main table.
 /routing rule
 add action=lookup comment="local LAN traffic" disabled=no min-prefix=0 table=main
@@ -104,7 +104,7 @@ You can define custom `large-community-set` configurations (e.g., `174,13335`). 
 
 * `large_bgp_filter` is our list for large communities.
 
-```routeros
+```sh
 # Create a list to configure gateways based on communities (optional)
 /routing filter community-large-list
 add communities=64512:0:174,64512:0:13335 disabled=no list=large_bgp_filter
@@ -117,7 +117,7 @@ add communities=64512:0:174,64512:0:13335 disabled=no list=large_bgp_filter
 * `large_bgp_filter` refers to the community list created in the previous step.
 
 
-```routeros
+```sh
 # We are adding filter rule
 /routing filter rule
 add chain=filter_chain disabled=no rule="if(afi ipv6) { set \
@@ -137,7 +137,7 @@ The following settings are mandatory.
 * IMPORTANT: Replace `ROUTER_IP` with the IP address of your MikroTik router;
 * `64999` - our MikroTik router AS.
 
-```routeros
+```sh
 /routing bgp instance
 # Create the BGP instance.
 add as=64999 disabled=no name=MY_INSTANCE router-id=ROUTER_IP
@@ -153,7 +153,7 @@ The following settings are mandatory. This configures the filters and the connec
 * `64512` - WDBGP server AS;
 * `64999` - our MikroTik router AS.
 
-```routeros
+```sh
 # Configure filter: do not advertise local routes back to the WDBGP server.
 /routing filter rule
 add chain=discard disabled=no rule="reject;"
