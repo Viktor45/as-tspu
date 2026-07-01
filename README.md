@@ -39,7 +39,7 @@ Please note:
 
 ## Contributing guidelines
 
-Additions to the list are welcome. Please be sure to cite the source.
+Additions to the list are welcome. 
 
 Simple rules for the list:
 
@@ -51,7 +51,9 @@ Do not add to the list:
 * YouTube, Google, etc.
 * Russian resources and networks.
 
-Create an issue or submit a PR to `as-numbers.txt`. Other files are generated automatically every 8 hours.
+Create an issue or submit a PR to `as-numbers.txt`. 
+Other files are generated automatically every 8 hours.
+Please be sure to cite the source.
 
 ## IPVerse data generation
 
