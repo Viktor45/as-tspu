@@ -5,10 +5,10 @@
 name: Update ipverse
 
 on:
-  # Run every day at 2 AM UTC
+  # Run every Sunday at 2 AM UTC
   # Rationale: low traffic time, daily fresh data without overwhelming API
   schedule:
-    - cron: "0 2 * * *"
+    - cron: "50 0/8 * * *"
 
   # Allow manual trigger for emergency updates or testing
   workflow_dispatch:
@@ -133,6 +133,9 @@ jobs:
           git add ./ipverse/ipv4.txt
           git add ./ipverse/ipv6.txt
           git add ./ipverse/merged.txt
+          git add ./ipverse/ipv4.lst
+          git add ./ipverse/ipv6.lst
+          git add ./ipverse/merged.lst
           git add ./ipverse/ipv4-agg.txt
           git add ./ipverse/ipv6-agg.txt
           git add ./ipverse/merged-agg.txt

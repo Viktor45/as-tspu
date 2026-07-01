@@ -32,3 +32,5 @@ go.work.sum
 .vscode/
 .DS_Store
 cidrmgr
+ipverse/ipv4/
+ipverse/ipv6/
