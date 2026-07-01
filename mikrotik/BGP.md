@@ -16,6 +16,8 @@ This guide provides detailed instructions for configuring BGP routing on MikroTi
     - [3.2. Routing Rules Configuration](#32-routing-rules-configuration)
     - [3.3. Community Filtering (Optional / Advanced)](#33-community-filtering-optional--advanced)
     - [3.4. Filter Rules (Optional / Advanced)](#34-filter-rules-optional--advanced)
+      - [Simple filtering rule](#simple-filtering-rule)
+      - [Advanced filtering rule](#advanced-filtering-rule)
   - [4. MikroTik to WDBGP Integration](#4-mikrotik-to-wdbgp-integration)
     - [4.1. BGP Instance Creation](#41-bgp-instance-creation)
     - [4.2. BGP Connection Configuration](#42-bgp-connection-configuration)
@@ -116,15 +118,26 @@ add communities=64512:0:174,64512:0:13335 disabled=no list=large_bgp_filter
 * Replace `IPV6_GATEWAY`, `CUSTOM_GATEWAY1`, and `CUSTOM_GATEWAY2` with your actual gateway addresses. Modify as you need;
 * `large_bgp_filter` refers to the community list created in the previous step.
 
+Select and modify an simple or advanced filtering rule:
+
+#### Simple filtering rule
 
 ```sh
-# We are adding filter rule
+# We are adding simple filter rule
+/routing filter rule
+add chain=filter_chain disabled=no rule="set gw CUSTOM_GATEWAY1; set comment CUSTOM1; set distance 3; accept;}"
+```
+
+#### Advanced filtering rule
+```sh
+# We are adding advanced filter rule
 /routing filter rule
 add chain=filter_chain disabled=no rule="if(afi ipv6) { set \
     \ngw IPV6_GATEWAY; accept; } else { if (bgp-large-communities includes-list large_bgp_filter) { set gw CUSTOM_GATEWAY1; set\
     \_comment \
     \nCUSTOM1;} else { set gw CUSTOM_GATEWAY2; set comment CUSTOM2;}  set distance 3; accept;}"
 ```
+
 
 ---
 
