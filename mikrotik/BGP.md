@@ -151,7 +151,9 @@ The following settings are mandatory. This configures the filters and the connec
 * IMPORTANT: Replace `ROUTER_IP` with your MikroTik IP;
 * IMPORTANT: Replace `BGP_SERVER_IP` with your WDBGP server IP;
 * `64512` - WDBGP server AS;
-* `64999` - our MikroTik router AS.
+* `64999` - our MikroTik router AS;
+* `filter_chain` - is our main filtering rule, see before for an example;
+* `table-bgp` is our routing table for BGP routes.
 
 ```sh
 # Configure filter: do not advertise local routes back to the WDBGP server.
