@@ -13,6 +13,8 @@ Crowdsourced list of AS numbers affected by TSPU interference
 ## Purpose of the list
 This list aims to simplify for end users the list of networks whose access must be corrected due to interference from TSPU equipment. 
 
+This list generation tool can also be used to prepare any other AS lists. Simply fork the repository and populate the AS list file `as-numbers.txt` with your own dataset, and don't forget to update the list links yourself if necessary.
+
 ## Download
 
 The lists can be downloaded here:
