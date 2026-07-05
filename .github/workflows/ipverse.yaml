@@ -8,7 +8,7 @@ on:
   # Run every day at 7 AM UTC
   # Rationale: low traffic time, daily fresh data without overwhelming API
   schedule:
-    - cron: "0 7 * * *"
+    - cron: "0 2 * * *"
 
   # Allow manual trigger for emergency updates or testing
   workflow_dispatch:
