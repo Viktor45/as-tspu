@@ -4853,9 +4853,6 @@
 # AS393511 (NUV-AS01)
 # Nuvollo
 #
-# AS393515 (R2NET-INC)
-# R2Net Inc
-#
 # AS393929 (SIMPATICO)
 # Simpatico Systems
 #
