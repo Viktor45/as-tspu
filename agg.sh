@@ -25,10 +25,10 @@ http_get() {
   url="$1"
   dest="$2"
 
-  if command -v curl >/dev/null 2>&1; then
+  if command -v wget >/dev/null 2>&1; then
+    wget --retry-on-http-error=429 --waitretry=3 --tries=3 -q -O "$dest" "$url"
+  elif command -v curl >/dev/null 2>&1; then
     curl -fsSL "$url" -o "$dest"
-  elif command -v wget >/dev/null 2>&1; then
-    wget -q -O "$dest" "$url"
   else
     fail "curl or wget is required to download the cidrmgr release"
   fi
