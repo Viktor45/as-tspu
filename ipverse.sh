@@ -18,9 +18,9 @@ download_file() {
     url="$1"
     dest="$2"
     if command -v curl >/dev/null 2>&1; then
-        curl -fsSL "$url" -o "$dest"
+        curl -sSL --retry 3 --retry-delay 5 --retry-max-time 15 "$url" -o "$dest"
     elif command -v wget >/dev/null 2>&1; then
-        wget -q -O "$dest" "$url"
+        wget --retry-on-http-error=429 --waitretry=3 --tries=3 -q -O "$dest" "$url"
     else
         echo "Error: curl or wget is required." >&2
         exit 1
