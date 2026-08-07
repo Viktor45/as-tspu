@@ -64,7 +64,7 @@ function sync(feed, api) {
   return result
 }
 ```
-> **Note:** Ensure that community numbers are configured in **Admin -> Communities**, and enable the required directory and feed for your client (the router).
+> **Note:** Ensure that community numbers are configured in **Admin -> Modes -> Mode -> Communities**, and enable the required directory and feed for your client (the router).
 
 ---
 
@@ -102,7 +102,7 @@ add action=lookup chain=user comment="send all LAN bridge to table-bgp" disabled
 ### 3.3. Community Filtering (Optional / Advanced)
 *These settings are optional and provided as a reference for advanced users.*
 
-You can define custom `large-community-set` configurations (e.g., `174,13335`). Ensure these communities are named appropriately in the WDBGP **Admin -> Communities** interface.
+You can define custom `large-community-set` configurations (e.g., `174,13335`). Ensure these communities are named appropriately in the WDBGP **Admin -> Modes -> Mode -> Communities** interface.
 
 * `large_bgp_filter` is our list for large communities.
 
