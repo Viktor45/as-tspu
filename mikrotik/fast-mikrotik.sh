@@ -6,6 +6,9 @@
 #
 # example: ./fast-mikrotik.sh ../ipverse/ipv4-agg.txt ../ipverse/ipv6-agg.txt tspu-list bypass TSPU
 #
+# Also generates <output_file>-cleanup.rsc to remove the created address-list
+# entries from the router.
+#
 # https://github.com/Viktor45/as-tspu
 
 if [ "$#" -ne 5 ]; then
@@ -14,7 +17,7 @@ if [ "$#" -ne 5 ]; then
     exit 1
 fi
 
-# 2. Check if each provided path actually exists
+# Check if each provided path actually exists
 for arg in "$1" "$2"; do
     if [ ! -e "$arg" ]; then
         echo "Error: file '$arg' does not exist." >&2
@@ -24,14 +27,12 @@ done
 
 IPV4_FILE=$1
 IPV6_FILE=$2
-OUTPUT_FILE=$3.rsc
+OUTPUT_FILE=$3
 LIST_NAME=$4
 COMMENT=$5
 
 # Clear previous output file
-> "$OUTPUT_FILE"
-
-## echo ":do {\n" >>"$OUTPUT_FILE"
+: > "$OUTPUT_FILE"
 
 # Process IPv4 addresses
 if [ -f "$IPV4_FILE" ]; then
@@ -49,7 +50,10 @@ if [ -f "$IPV6_FILE" ]; then
     awk -v list="$LIST_NAME" -v comment="$COMMENT" '{print "add list=" list " comment=" comment " address=" $1}' >> "$OUTPUT_FILE"
 fi
 
-## echo "\n } on-error={}" >>"$OUTPUT_FILE"
-echo "Conversion complete. Saved to $OUTPUT_FILE"
+# Cleanup script to remove the added entries from the router
+printf '%s\n' \
+    "/ip firewall address-list remove [find where list=\"$LIST_NAME\" comment=\"$COMMENT\"]" \
+    "/ipv6 firewall address-list remove [find where list=\"$LIST_NAME\" comment=\"$COMMENT\"]" \
+    >> "${OUTPUT_FILE}-cleanup.rsc"
 
-echo "/ip/firewall/address-list/remove [find where comment=\"$5\" list=\"$4\"]\n/ipv6/firewall/address-list/remove [find where comment=\"$5\" list=\"$4\"]">> $3-cleanup.rsc 
+echo "Conversion complete. Saved to $OUTPUT_FILE and ${OUTPUT_FILE}-cleanup.rsc"

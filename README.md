@@ -7,6 +7,7 @@ Crowdsourced list of AS numbers affected by TSPU interference
   - [Download](#download)
   - [Contributing guidelines](#contributing-guidelines)
   - [IPVerse data generation](#ipverse-data-generation)
+  - [MikroTik integration](#mikrotik-integration)
   - [Legal notice](#legal-notice)
 <!-- TOC -->
 
@@ -54,7 +55,7 @@ Do not add to the list:
 * Russian resources and networks.
 
 Create an issue or submit a PR to `as-numbers.txt`. 
-Other files are generated automatically every 8 hours.
+Other files are generated automatically: the [GitHub Actions workflow](.github/workflows/ipverse.yaml) runs daily at 01:00 UTC and additionally on every change of `as-numbers.txt` in the `main` branch.
 Please be sure to cite the source.
 
 ## IPVerse data generation
@@ -63,11 +64,15 @@ This repository includes [ipverse.sh](ipverse.sh), a helper script that download
 
 Running `sh ipverse.sh` will:
 * create an `ipverse` folder
+* remove stale cached files of AS numbers no longer present in `as-numbers.txt`
 * download per-AS `ipv4-aggregated.txt` files to `ipverse/ipv4/{AS}.txt`
 * download per-AS `ipv6-aggregated.txt` files to `ipverse/ipv6/{AS}.txt`
 * merge all IPv4 files into `ipverse/ipv4.txt`
 * merge all IPv6 files into `ipverse/ipv6.txt`
 * combine both into `ipverse/merged.txt`
+* generate `.lst` variants (`as_number,ip_cidr` per line) alongside each merged list
+
+The `ipverse/ipv4/` and `ipverse/ipv6/` per-AS directories are local caches and are not committed to the repository.
 
 This repository also includes [agg.sh](agg.sh), which downloads the latest `cidrmgr` binary release for the current OS/architecture and aggregates the generated IP lists.
 
@@ -77,6 +82,14 @@ Running `sh agg.sh` will:
 * run `cidrmgr merge -i ipverse/ipv4.txt -o ipverse/ipv4-agg.txt`
 * run `cidrmgr merge -i ipverse/ipv6.txt -o ipverse/ipv6-agg.txt`
 * merge both aggregated outputs into `ipverse/merged-agg.txt`
+
+## MikroTik integration
+
+The [mikrotik](mikrotik) folder contains helper scripts for importing the generated lists into MikroTik RouterOS:
+
+* [fast-mikrotik.sh](mikrotik/fast-mikrotik.sh) — converts the aggregated `ipverse/*-agg.txt` lists into an importable `.rsc` script for firewall address-lists, plus a matching cleanup script.
+* [slow-routeros.rsc](mikrotik/slow-routeros.rsc) — a self-contained RouterOS script that fetches a list directly on the router; convenient, but slow on low-end devices.
+* [BGP.md](mikrotik/BGP.md) — the recommended production approach: distributing the lists via BGP with a self-hosted [WDBGP](https://github.com/andrey-vk/wdbgp/) server instead of firewall address-lists.
 
 ## Legal notice
 This list may be used by any telecom operators or users for any lawful purposes.

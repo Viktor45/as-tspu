@@ -27,19 +27,20 @@
 :do { /file remove $tempFile } on-error={}
 
 :do {
-    /tool fetch url=$url dst-path=$tempFile mode=https
+    /tool fetch url=$url dst-path=$tempFile
     :delay 2s
     :log info ("as-tspu: reading file")
     # Read and process
     :local fsize [/file get $tempFile size]
     :local max 32768
-    :local chunks (($fsize / $max) - 1)
+    # Number of full chunks, plus one more if the size is not an exact multiple
+    :local chunks ($fsize / $max)
     :if ($fsize > ($max * $chunks)) do={
-        :set $chunks ($chunks + 1)
+        :set chunks ($chunks + 1)
     }
 
     :local content
-    :for i from=0 to=$chunks do={
+    :for i from=0 to=($chunks - 1) do={
         # Start each read from the next chunk
         :local offset ($i * $max)
         :local filechunk [/file/read file=$tempFile offset=$offset chunk-size=$max as-value]
@@ -60,7 +61,8 @@
             :if ([:len $currentLine] > 0) do={
                 :set ($lines->$lineCount) $currentLine
                 :set lineCount ($lineCount + 1)
-                :if ($lineCount % 333 = 0) do={
+                # Progress log every 1000 parsed lines
+                :if ($lineCount % 1000 = 0) do={
                     :log info ("as-tspu: lines parsed: $lineCount")
                 }
             }
@@ -117,7 +119,7 @@
         }
     }
 
-    :log info ("as-tspu: Added $added prefixes")
+    :log info ("as-tspu: added $added prefixes, skipped $skipped lines")
 
     # Cleanup
     /file remove $tempFile

@@ -102,9 +102,9 @@ add action=lookup chain=user comment="send all LAN bridge to table-bgp" disabled
 ### 3.3. Community Filtering (Optional / Advanced)
 *These settings are optional and provided as a reference for advanced users.*
 
-You can define custom `large-community-set` configurations (e.g., `174,13335`). Ensure these communities are named appropriately in the WDBGP **Admin -> Modes -> Mode -> Communities** interface.
+You can define custom `large-community-set` configurations (e.g., `64512:0:174`). Ensure these communities are named appropriately in the WDBGP **Admin -> Modes -> Mode -> Communities** interface.
 
-* `large_bgp_filter` is our list for large communities.
+* `large_bgp_filter` is our community-large-list.
 
 ```sh
 # Create a list to configure gateways based on communities (optional)
@@ -125,7 +125,7 @@ Select and modify an simple or advanced filtering rule:
 ```sh
 # We are adding simple filter rule
 /routing filter rule
-add chain=filter_chain disabled=no rule="set gw CUSTOM_GATEWAY1; set comment CUSTOM1; set distance 3; accept;}"
+add chain=filter_chain disabled=no rule="set gw CUSTOM_GATEWAY1; set comment CUSTOM1; set distance 3; accept"
 ```
 
 #### Advanced filtering rule
@@ -133,9 +133,9 @@ add chain=filter_chain disabled=no rule="set gw CUSTOM_GATEWAY1; set comment CUS
 # We are adding advanced filter rule
 /routing filter rule
 add chain=filter_chain disabled=no rule="if(afi ipv6) { set \
-    \ngw IPV6_GATEWAY; accept; } else { if (bgp-large-communities includes-list large_bgp_filter) { set gw CUSTOM_GATEWAY1; set\
-    \_comment \
-    \nCUSTOM1;} else { set gw CUSTOM_GATEWAY2; set comment CUSTOM2;}  set distance 3; accept;}"
+    \ngw IPV6_GATEWAY; accept; } else { if (bgp-large-communities includes-list large_bgp_filter) { set gw CUSTOM_GATEWAY1; set \
+    \ncomment \
+    \nCUSTOM1; } else { set gw CUSTOM_GATEWAY2; set comment CUSTOM2;}  set distance 3; accept; }"
 ```
 
 

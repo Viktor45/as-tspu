@@ -10,6 +10,14 @@ on:
   schedule:
     - cron: "0 1 * * *"
 
+  # Regenerate immediately when the AS list changes, so a merged PR is
+  # reflected in the generated lists without waiting for the daily run
+  push:
+    branches:
+      - main
+    paths:
+      - "as-numbers.txt"
+
   # Allow manual trigger for emergency updates or testing
   workflow_dispatch:
 
@@ -123,8 +131,8 @@ jobs:
           echo "✓ Git user configured for automation"
 
       # ======================================================================
-      # Step 7: Commit and push changes if detected
-      # Only creates commit if merged.txt actually changed
+      # Step 8: Commit and push changes if detected
+      # Only creates commit if generated files actually changed
       # Prevents spam commits and unnecessary workflow triggers
       # ======================================================================
       - name: Commit and push changes if detected
@@ -159,7 +167,8 @@ jobs:
 
           # Push with error handling
           if git push; then
-            echo "✓ Changes pushed successfully to origin/${{ github.ref_name }}"
+            echo "✓ Changes pushed successfully to origin/main"
+            echo "HEAD: $(git rev-parse --short HEAD)"
           else
             echo "ERROR: Failed to push changes"
             exit 1
