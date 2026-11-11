@@ -101,3 +101,4 @@ Sources:
 * https://ntc.party/t/блокировка-cloudflare-ovh-hetzner-digitalocean-09062025-xxxxxxxx/17013/682
 * https://github.com/123jjck/cdn-ip-ranges/
 * https://habr.com/ru/articles/1010336/
+* https://habr.com/ru/articles/1104904/
